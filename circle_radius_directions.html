@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+	<title>SVG с настраиваемыми границами</title>
+	
+	<body>
+		<script src="vue.global.js"></script>
+		
+		<DIV id="mySVG">
+			Ширина: <input v-model="wdth">
+			<br>		
+			Высота: <input v-model="hght">
+			<br>
+			
+			По горизонтали: <input type="range" min="0" :max="w" v-model="x">
+			<br>		
+			По вертикали: <input type="range" min="0" :max="h" v-model="y">
+			<br>
+			Радиус: <input type="range" min="0" :max="h" v-model="r">
+			<br>
+			<svg :width="w"
+				 :height="h">
+				<circle :cx="x" :cy="y" :r="r">
+			</svg>
+		</DIV>
+		
+		<SCRIPT>
+			var app = Vue.createApp(
+			{
+				data() 
+				{
+					return  {
+								w: 320,
+								h: 240,
+								x: 160,
+								y: 120,
+								r: 5 
+							}
+				},
+				
+				computed:
+				{
+					hght:
+					{
+						get: function () 
+						{
+							return this.h
+						},
+						set: function (newValue) 
+						{
+							this.h = newValue;
+							this.w = (newValue * 4) / 3;
+						}
+					},
+					
+					wdth:
+					{
+						get: function () 
+						{
+							return this.w
+						},
+						set: function (newValue) 
+						{
+							this.w = newValue;
+							this.h = (newValue * 3) / 4;
+						}
+					},					
+				},
+			}).mount("#mySVG")
+		</SCRIPT>
+
+		<STYLE type="text/css">
+			svg
+			{
+				border: 1px solid #000000;
+			}
+		</STYLE>
+	</body>
+	
+</html>
